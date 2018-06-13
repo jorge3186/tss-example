@@ -1,0 +1,140 @@
+{
+  "name": "example-jss-react",
+  "version": "8.0.3",
+  "description": "A basic app utilizing Sitecore JavaScript Services.",
+  "config": {
+    "appName": "example-jss-react",
+    "sitecoreDistPath": "/dist/example-jss-react",
+    "sitecoreConfigPath": "/App_Config/Include/zzz",
+    "buildArtifactsPath": "./dist",
+    "staticOutputPublicPath": "/",
+    "routeDataDir": "./data/routes",
+    "language": "en"
+  },
+  "scripts": {
+    "jss": "jss",
+    "lint": "tslint --config ./buildtools/tslint.yml --fix ./src/**/*.{ts,tsx} ./sitecore/definitions/**/*.{ts,tsx} ./buildtools/**/*.ts ./lib/**/*.ts",
+    "pretest": "yarn lint",
+    "test": "jest --coverage",
+    "start": "jss clean && ts-node -r babel-register ./buildtools/start.ts --env.content=disconnected",
+    "start:connected": "scjss-verify-setup && jss clean && ts-node -r babel-register ./buildtools/start.ts --env.content=connected",
+    "deploy:watch": "scjss-verify-setup && cross-env-shell ts-node webpack-cli --config ./buildtools/webpack/webpack.clientandserver.ts --color --progress --env.content=connected --env.publicPath=$npm_package_config_sitecoreDistPath --env.watch --env.outputPath=sitecore",
+    "build": "jss clean && cross-env-shell webpack-cli --config ./buildtools/webpack/webpack.clientandserver.ts --color --progress --env.content=connected --env.publicPath=$npm_package_config_sitecoreDistPath --env.production"
+  },
+  "private": true,
+  "babel": {
+    "presets": [
+      "env",
+      "react",
+      "stage-0"
+    ],
+    "plugins": [
+      "babel-plugin-inline-import"
+    ]
+  },
+  "author": {
+    "name": "Sitecore Corporation",
+    "email": "jss@sitecore.net",
+    "url": "https://jss.sitecore.net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitecore/jss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sitecore/jss/issues"
+  },
+  "homepage": "https://jss.sitecore.net",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@sitecore-jss/sitecore-jss-react": "^8.0.3",
+    "babel-polyfill": "^6.26.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "redux": "^4.0.0"
+  },
+  "devDependencies": {
+    "@sitecore-jss/sitecore-jss-cli": "^8.0.3",
+    "@sitecore-jss/sitecore-jss-dev-tools": "^8.0.3",
+    "@sitecore-jss/sitecore-jss-manifest": "^8.0.3",
+    "@types/enzyme": "^3.1.10",
+    "@types/enzyme-adapter-react-16": "^1.0.2",
+    "@types/jest": "^23.0.2",
+    "@types/node": "^10.3.2",
+    "@types/react": "^16.3.17",
+    "@types/react-redux": "^6.0.2",
+    "@types/react-router-dom": "4.2.2",
+    "@types/redux": "^3.6.0",
+    "@types/webpack": "^4.4.0",
+    "awesome-typescript-loader": "^5.0.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-inline-import": "^2.0.6",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chalk": "^2.3.0",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.9",
+    "del": "^3.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.16.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-import-resolver-webpack": "^0.8.4",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.5.0",
+    "eslint-plugin-react": "^7.1.0",
+    "file-loader": "^1.1.11",
+    "fs-extra": "^3.0.1",
+    "isomorphic-fetch": "^2.2.1",
+    "jest": "^23.1.0",
+    "jest-enzyme": "^6.0.1",
+    "js-yaml": "^3.10.0",
+    "lodash.merge": "^4.6.0",
+    "opn": "^5.1.0",
+    "prettier": "^1.10.2",
+    "progress-bar-webpack-plugin": "^1.10.0",
+    "replace-ext": "^1.0.0",
+    "style-loader": "^0.20.2",
+    "ts-jest": "^22.4.6",
+    "ts-node": "^6.1.1",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^4.12.0",
+    "webpack-bundle-analyzer": "^2.9.2",
+    "webpack-cli": "^3.0.5",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "<rootDir>/src/setupTests.ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx|js)"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss)$": "<rootDir>/src/app/__mocks__/styleMocks.ts"
+    },
+    "modulePaths": [
+      "<rootDir>/src/app/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/src/setupTests.ts"
+    ]
+  }
+}
